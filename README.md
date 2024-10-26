@@ -1,4 +1,4 @@
-# mood_matcher
+# Mood Matcher
 
 A new Flutter project.
 
