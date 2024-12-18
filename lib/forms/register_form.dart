@@ -1,5 +1,7 @@
+import 'package:animated_emoji/animated_emoji.dart';
 import 'package:flutter/material.dart';
-import 'package:mood_matcher/widgets/custom_button.dart';
+import 'package:mood_matcher/pages/avatar_page.dart';
+import 'package:mood_matcher/widgets/custom_button_with_emoji.dart';
 import 'package:mood_matcher/widgets/custom_text_form_field.dart';
 
 class RegisterForm extends StatelessWidget {
@@ -46,9 +48,11 @@ class RegisterForm extends StatelessWidget {
           const SizedBox(
             height: 40,
           ),
-          CustomButton(
-            text: 'Register',
-            onPressed: () {},
+          CustomButtonWithEmoji(
+            text: 'Next',
+            emoji: AnimatedEmojis.rocket,
+            buttonWidth: 200,
+            onPressed: () => Navigator.pushNamed(context, AvatarPage.id),
           ),
         ],
       ),

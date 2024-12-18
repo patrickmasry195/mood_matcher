@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:mood_matcher/pages/register_page.dart';
 import 'package:mood_matcher/sign_up_suggestion.dart';
 import 'package:mood_matcher/widgets/custom_button.dart';
 import 'package:mood_matcher/widgets/custom_text_form_field.dart';
@@ -31,7 +31,7 @@ class LoginForm extends StatelessWidget {
             height: 20,
           ),
           SignUpSuggestion(
-            onTap: () => context.go('/register_page'),
+            onTap: () => Navigator.pushNamed(context, RegisterPage.id),
           ),
           const SizedBox(
             height: 100,
