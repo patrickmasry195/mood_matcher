@@ -38,6 +38,7 @@ dependencies:
   flutter_native_splash: ^2.4.3
   google_fonts: ^6.2.1
   animated_emoji: ^3.1.0
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,7 @@ flutter:
     - assets/
     - assets/backgrounds/
     - assets/logos/
+    - assets/categories/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
