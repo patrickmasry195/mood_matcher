@@ -21,13 +21,18 @@ class CustomButtonWithEmoji extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-          elevation: 15,
-          backgroundColor: kMainColor,
-          minimumSize: const Size(100, 60),
-          maximumSize: Size(buttonWidth, 60),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          )),
+        elevation: 15,
+        backgroundColor: kMainColor,
+        minimumSize: const Size(100, 60),
+        maximumSize: Size(buttonWidth, 60),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+        ),
+      ).copyWith(
+        backgroundColor: WidgetStateProperty.all(
+          kMainColor,
+        ),
+      ),
       onPressed: onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

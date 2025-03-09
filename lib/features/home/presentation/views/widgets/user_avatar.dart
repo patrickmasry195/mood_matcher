@@ -9,19 +9,18 @@ class UserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-        MediaQuery.of(context).size.width / 4.5,
-        MediaQuery.of(context).size.width / 8,
-        0,
-        0,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 50),
       child: GestureDetector(
         onTap: () {
           Navigator.pushNamed(context, UserProfilePage.id);
         },
-        child: const CircleAvatar(
-          backgroundImage: AssetImage("assets/default_avatar2.png"),
-          maxRadius: 25,
+        child: ClipOval(
+          child: Image.asset(
+            "assets/default_avatar.png",
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

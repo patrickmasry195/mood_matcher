@@ -13,7 +13,11 @@ class CustomAppbar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         UserWelcomeMessage(),
+        Spacer(
+          flex: 2,
+        ),
         UserAvatar(),
+        Spacer(),
       ],
     );
   }
