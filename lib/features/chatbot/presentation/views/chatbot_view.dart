@@ -1,7 +1,10 @@
+import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mood_matcher/core/utils/constants.dart';
 import 'package:mood_matcher/core/utils/app_backgrounds.dart';
+import 'package:mood_matcher/features/chatbot/presentation/views/widgets/chat_bubbles.dart';
+import 'package:mood_matcher/features/home/presentation/views/home_view.dart';
 
 class ChatBotPage extends StatelessWidget {
   const ChatBotPage({super.key});
@@ -14,16 +17,35 @@ class ChatBotPage extends StatelessWidget {
       children: [
         AppBackgrounds.chatBotBackground,
         Scaffold(
+          resizeToAvoidBottomInset: true,
           backgroundColor: Colors.transparent,
-          body: Center(
-            child: Text(
-              "Under development",
-              style: GoogleFonts.lexend(
-                fontSize: 40,
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () => Navigator.pushNamed(context, HomePage.id),
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 40,
                 color: kMainColor,
-                fontWeight: FontWeight.w900,
               ),
             ),
+            backgroundColor: Colors.transparent,
+          ),
+          body: Column(
+            children: [
+              const Expanded(
+                child: ChatBubbles(),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .02,
+              ),
+              MessageBar(
+                messageBarColor: kMainColor,
+                sendButtonColor: Colors.white,
+                messageBarHintStyle: GoogleFonts.lexend(
+                  color: Colors.black,
+                ),
+              ),
+            ],
           ),
         ),
       ],
