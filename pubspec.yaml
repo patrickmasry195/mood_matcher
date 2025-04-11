@@ -40,6 +40,7 @@ dependencies:
   animated_emoji: ^3.1.0
   carousel_slider: ^5.0.0
   chat_bubbles: ^1.7.0
+  flutter_bloc: ^9.1.0
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ flutter:
     - assets/backgrounds/
     - assets/logos/
     - assets/categories/
+    - assets/quotes.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
