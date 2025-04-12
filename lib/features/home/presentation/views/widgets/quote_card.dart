@@ -1,17 +1,21 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mood_matcher/features/home/presentation/view_models/cubit/quote_cubit.dart';
 
 class QuoteCard extends StatelessWidget {
   const QuoteCard({
     super.key,
+    required this.quote,
+    this.onTap,
   });
+
+  final String quote;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => QuoteCubit()..loadQuotes(),
+    return GestureDetector(
+      onTap: onTap,
       child: Container(
         height: 237,
         width: 323,
@@ -34,52 +38,24 @@ class QuoteCard extends StatelessWidget {
             ],
           ),
         ),
-        child: BlocBuilder<QuoteCubit, QuoteState>(
-          builder: (context, state) {
-            if (state is QuoteLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is QuoteLoaded) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-                    child: Text(
-                      "❝ ${state.quote.quote} ❞",
-                      style: GoogleFonts.lexend(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+              child: Expanded(
+                child: AutoSizeText(
+                  "❝$quote❞",
+                  style: GoogleFonts.lexend(
+                    color: Colors.white,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
-                    child: Text(
-                      state.quote.author,
-                      style: GoogleFonts.lexend(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    "From: ${state.quote.source}",
-                    style: GoogleFonts.lexend(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              );
-            } else if (state is QuoteError) {
-              return Center(
-                child: Text(state.message),
-              );
-            }
-            return const SizedBox.shrink();
-          },
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 4,
+                  minFontSize: 15,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

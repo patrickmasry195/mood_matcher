@@ -30,74 +30,73 @@ class UserProfilePage extends StatelessWidget {
             ),
           ),
           body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 25,
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(140),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 25,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(140),
+                        ),
+                        child: const CircleAvatar(
+                          radius: 40,
+                          backgroundImage:
+                              AssetImage("assets/default_avatar.png"),
+                        ),
                       ),
-                      child: const CircleAvatar(
-                        radius: 40,
-                        backgroundImage:
-                            AssetImage("assets/default_avatar.png"),
+                      const SizedBox(
+                        height: 20,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Daryl Dixon",
-                      style: GoogleFonts.lexend(
-                        fontSize: 30,
-                        color: Colors.white,
+                      Text(
+                        "Daryl Dixon",
+                        style: GoogleFonts.lexend(
+                          fontSize: 30,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "daryl@gmail.com",
-                      style: GoogleFonts.lexend(
-                        fontSize: 20,
-                        color: Colors.white,
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-                const CustomButtonWithEmoji(
-                  text: "Edit Account",
-                  emoji: AnimatedEmojis.pencil,
-                  buttonWidth: 326,
-                ),
-                const CustomButtonWithEmoji(
-                  text: "Delete Account",
-                  emoji: AnimatedEmojis.loudlyCrying,
-                  buttonWidth: 326,
-                ),
-                const CustomButtonWithEmoji(
-                  text: "Contact us",
-                  emoji: AnimatedEmojis.loveLetter,
-                  buttonWidth: 326,
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                const CustomButtonWithEmoji(
-                  text: "Log out",
-                  emoji: AnimatedEmojis.cry,
-                  buttonWidth: 326,
-                ),
-                const Spacer(
-                  flex: 10,
-                )
-              ],
+                      Text(
+                        "daryl@gmail.com",
+                        style: GoogleFonts.lexend(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                  const CustomButtonWithEmoji(
+                    text: "Edit Account",
+                    emoji: AnimatedEmojis.pencil,
+                  ),
+                  const CustomButtonWithEmoji(
+                    text: "Delete Account",
+                    emoji: AnimatedEmojis.loudlyCrying,
+                  ),
+                  const CustomButtonWithEmoji(
+                    text: "Contact us",
+                    emoji: AnimatedEmojis.loveLetter,
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  const CustomButtonWithEmoji(
+                    text: "Log out",
+                    emoji: AnimatedEmojis.cry,
+                  ),
+                  const Spacer(
+                    flex: 10,
+                  )
+                ],
+              ),
             ),
           ),
         ),

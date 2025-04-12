@@ -51,7 +51,6 @@ class RegisterForm extends StatelessWidget {
           CustomButtonWithEmoji(
             text: 'Next',
             emoji: AnimatedEmojis.rocket,
-            buttonWidth: 200,
             onPressed: () => Navigator.pushNamed(context, AvatarPage.id),
           ),
         ],

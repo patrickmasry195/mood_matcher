@@ -9,50 +9,54 @@ class CustomButtonWithEmoji extends StatelessWidget {
     this.onPressed,
     required this.text,
     required this.emoji,
-    required this.buttonWidth,
+    // required this.buttonWidth,
   });
 
   final void Function()? onPressed;
   final String text;
   final AnimatedEmojiData emoji;
-  final double buttonWidth;
+
+  // final double buttonWidth;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        elevation: 15,
-        backgroundColor: kMainColor,
-        minimumSize: const Size(100, 60),
-        maximumSize: Size(buttonWidth, 60),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
-      ).copyWith(
-        backgroundColor: WidgetStateProperty.all(
-          kMainColor,
-        ),
-      ),
-      onPressed: onPressed,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            text,
-            style: GoogleFonts.lexend(
-              fontSize: 30,
-              color: Colors.white,
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            elevation: 15,
+            backgroundColor: kMainColor,
+            minimumSize: Size(constraints.maxWidth, 60),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
+          ).copyWith(
+            backgroundColor: WidgetStateProperty.all(
+              kMainColor,
             ),
           ),
-          const SizedBox(
-            width: 20,
+          onPressed: onPressed,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                text,
+                style: GoogleFonts.lexend(
+                  fontSize: 30,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              AnimatedEmoji(
+                emoji,
+                size: 35,
+              ),
+            ],
           ),
-          AnimatedEmoji(
-            emoji,
-            size: 35,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

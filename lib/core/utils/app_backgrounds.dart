@@ -63,4 +63,13 @@ abstract class AppBackgrounds {
       ),
     ),
   );
+
+  static final quoteBackground = Container(
+    decoration: const BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage("assets/backgrounds/quote_background.png"),
+        fit: BoxFit.cover,
+      ),
+    ),
+  );
 }
