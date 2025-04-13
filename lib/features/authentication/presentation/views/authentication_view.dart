@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mood_matcher/core/utils/app_backgrounds.dart';
 import 'package:mood_matcher/features/authentication/presentation/views/widgets/auth_widgets/auth_logo.dart';
+import 'package:mood_matcher/features/authentication/presentation/views/widgets/auth_widgets/register_button.dart';
 import 'widgets/auth_widgets/login_button.dart';
-import 'widgets/auth_widgets/register_button.dart';
 
 class AuthenticationPage extends StatelessWidget {
   const AuthenticationPage({super.key});
@@ -38,4 +38,3 @@ class AuthenticationPage extends StatelessWidget {
     );
   }
 }
-

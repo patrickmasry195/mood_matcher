@@ -9,7 +9,11 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType,
     required this.hintText,
     required this.preIcon,
-    this.onChanged, this.errorText,
+    this.onChanged,
+    this.errorText,
+    this.onSaved,
+    this.validator,
+    this.controller,
   });
 
   final bool obscureText;
@@ -18,15 +22,21 @@ class CustomTextFormField extends StatelessWidget {
   final Icon preIcon;
   final void Function(String)? onChanged;
   final String? errorText;
+  final void Function(String?)? onSaved;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       obscureText: obscureText,
       style: GoogleFonts.lexend(color: kSecondaryColor),
       keyboardType: keyboardType,
       cursorColor: kSecondaryColor,
       onChanged: onChanged,
+      onSaved: onSaved,
+      validator: validator,
       decoration: InputDecoration(
         errorText: errorText,
         filled: true,

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mood_matcher/core/utils/constants.dart';
 import 'package:mood_matcher/features/avatar/presentation/views/widgets/register_button.dart';
-import 'package:mood_matcher/features/authentication/presentation/views/register_view.dart';
+import 'package:mood_matcher/features/avatar/presentation/views/widgets/upload_avatar.dart';
 import 'package:mood_matcher/core/utils/app_backgrounds.dart';
-import 'widgets/upload_avatar.dart';
 
 class AvatarPage extends StatelessWidget {
   const AvatarPage({super.key});
@@ -25,8 +24,7 @@ class AvatarPage extends StatelessWidget {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () =>
-                          Navigator.pushNamed(context, RegisterPage.id),
+                      onPressed: () => Navigator.pop(context),
                       icon: const Icon(
                         Icons.arrow_back,
                         size: 70,
@@ -43,9 +41,7 @@ class AvatarPage extends StatelessWidget {
                   fontSize: 25,
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               const UploadAvatar(),
               const RegisterButton()
             ],

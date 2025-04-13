@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mood_matcher/features/authentication/presentation/view_models/form_cubit/auth_form_cubit.dart';
+import 'package:mood_matcher/features/authentication/presentation/view_models/register_cubit/register_cubit.dart';
 import 'package:mood_matcher/features/authentication/presentation/views/authentication_view.dart';
+import 'package:mood_matcher/features/authentication/services/supabase_auth_service.dart';
 import 'package:mood_matcher/features/avatar/presentation/views/avatar_view.dart';
 import 'package:mood_matcher/features/chatbot/presentation/views/chatbot_view.dart';
 import 'package:mood_matcher/features/home/presentation/view_models/cubit/quote_cubit.dart';
@@ -32,8 +33,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<QuoteCubit>(
           create: (context) => QuoteCubit()..loadQuotes(),
         ),
-        BlocProvider<AuthFormCubit>(
-          create: (context) => AuthFormCubit(),
+        BlocProvider<RegisterCubit>(
+          create: (context) => RegisterCubit(SupabaseAuthService()),
         ),
       ],
       child: MaterialApp(
