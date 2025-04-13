@@ -33,6 +33,8 @@ class RegisterCubit extends Cubit<RegisterState> {
       await _authService.registerUser(
         email: state.email!,
         password: state.password!,
+        name: state.name!,
+        phone: state.phone!,
         avatar: state.avatar,
       );
       emit(state.copyWith(isSuccess: true, isLoading: false));

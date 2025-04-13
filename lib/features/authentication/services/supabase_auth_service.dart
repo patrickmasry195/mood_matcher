@@ -8,13 +8,27 @@ class SupabaseAuthService {
   Future<void> registerUser({
     required String email,
     required String password,
+    required String name,
+    required String phone,
     XFile? avatar,
   }) async {
     final response =
-        await _supabase.auth.signUp(email: email, password: password);
+    await _supabase.auth.signUp(email: email, password: password);
     final registeredUserId = response.user?.id;
 
-    if (avatar != null && registeredUserId != null) {
+    if (registeredUserId == null) {
+      throw Exception('Registration failed. No user ID returned.');
+    }
+
+    // Insert additional info into profiles table
+    await _supabase.from('profiles').insert({
+      'id': registeredUserId,
+      'name': name,
+      'phone': phone,
+    });
+
+    // Upload avatar if exists
+    if (avatar != null) {
       final avatarPath = '$registeredUserId/avatar.png';
       final file = File(avatar.path);
       await _supabase.storage.from('avatars').upload(avatarPath, file);
