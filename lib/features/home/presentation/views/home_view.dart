@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mood_matcher/core/utils/constants.dart';
 import 'package:mood_matcher/core/utils/app_backgrounds.dart';
+import 'package:mood_matcher/features/home/presentation/view_models/cubit/quote_cubit.dart';
 import 'package:mood_matcher/features/home/presentation/views/quote_view.dart';
 import 'package:mood_matcher/features/home/presentation/views/widgets/categories_slider.dart';
 import 'package:mood_matcher/features/home/presentation/views/widgets/quote_card.dart';
-import '../view_models/cubit/quote_cubit.dart';
+
 import 'widgets/custom_appbar.dart';
 
 class HomePage extends StatelessWidget {

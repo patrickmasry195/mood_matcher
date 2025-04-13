@@ -9,12 +9,15 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType,
     required this.hintText,
     required this.preIcon,
+    this.onChanged, this.errorText,
   });
 
   final bool obscureText;
   final TextInputType? keyboardType;
   final String hintText;
   final Icon preIcon;
+  final void Function(String)? onChanged;
+  final String? errorText;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,9 @@ class CustomTextFormField extends StatelessWidget {
       style: GoogleFonts.lexend(color: kSecondaryColor),
       keyboardType: keyboardType,
       cursorColor: kSecondaryColor,
+      onChanged: onChanged,
       decoration: InputDecoration(
+        errorText: errorText,
         filled: true,
         fillColor: kMainColor,
         focusedBorder: OutlineInputBorder(
