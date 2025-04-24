@@ -86,8 +86,9 @@ class _RegisterFormState extends State<RegisterForm> {
             keyboardType: TextInputType.visiblePassword,
             obscureText: true,
             preIcon: const Icon(Icons.lock),
-            validator: (value) =>
-                value == null || value.length < 8 ? 'Min 8 characters' : null,
+            validator: (value) => value == null || value.length < 8
+                ? 'Password must be at least 8 characters'
+                : null,
           ),
           const SizedBox(height: 40),
           CustomButtonWithEmoji(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mood_matcher/features/authentication/presentation/view_models/register_cubit/register_cubit.dart';
 import 'package:mood_matcher/features/authentication/presentation/views/widgets/custom_button.dart';
+import 'package:mood_matcher/features/home/presentation/view_models/user_cubit/user_cubit.dart';
 import 'package:mood_matcher/features/home/presentation/views/home_view.dart';
 
 class RegisterButton extends StatelessWidget {
@@ -11,8 +12,10 @@ class RegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RegisterCubit, RegisterState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state.isSuccess) {
+          await context.read<UserCubit>().loadUserProfile();
+          await Future.delayed(const Duration(milliseconds: 300));
           Navigator.pushReplacementNamed(context, HomePage.id);
         } else if (state.errorMessage != null) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -28,7 +31,7 @@ class RegisterButton extends StatelessWidget {
                 ? null
                 : () => context.read<RegisterCubit>().register(),
             child: state.isLoading
-                ? const CircularProgressIndicator(color: Colors.red,)
+                ? const CircularProgressIndicator(color: Colors.red)
                 : Text(
                     "Register",
                     style: GoogleFonts.lexend(
@@ -42,11 +45,3 @@ class RegisterButton extends StatelessWidget {
     );
   }
 }
-// ElevatedButton(
-// onPressed: state.isLoading
-// ? null
-//     : () => context.read<RegisterCubit>().register(),
-// child: state.isLoading
-// ? const CircularProgressIndicator()
-//     : const Text("Register"),
-// ),

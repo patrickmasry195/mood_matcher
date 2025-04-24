@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mood_matcher/features/authentication/presentation/view_models/login_cubit/login_cubit.dart';
 import 'package:mood_matcher/features/authentication/presentation/view_models/register_cubit/register_cubit.dart';
 import 'package:mood_matcher/features/authentication/presentation/views/authentication_view.dart';
 import 'package:mood_matcher/features/authentication/services/supabase_auth_service.dart';
 import 'package:mood_matcher/features/avatar/presentation/views/avatar_view.dart';
 import 'package:mood_matcher/features/chatbot/presentation/views/chatbot_view.dart';
-import 'package:mood_matcher/features/home/presentation/view_models/cubit/quote_cubit.dart';
+import 'package:mood_matcher/features/home/presentation/view_models/user_cubit/user_cubit.dart';
 import 'package:mood_matcher/features/home/presentation/views/home_view.dart';
 import 'package:mood_matcher/features/authentication/presentation/views/login_view.dart';
 import 'package:mood_matcher/features/authentication/presentation/views/register_view.dart';
 import 'package:mood_matcher/features/userprofile/presentation/views/userprofile_view.dart';
 import 'core/utils/supabase_config.dart';
+import 'features/home/presentation/view_models/quote_cubit/quote_cubit.dart';
 import 'features/home/presentation/views/quote_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -35,6 +37,13 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<RegisterCubit>(
           create: (context) => RegisterCubit(SupabaseAuthService()),
+        ),
+        BlocProvider<LoginCubit>(
+          create: (context) => LoginCubit(SupabaseAuthService()),
+        ),
+        BlocProvider<UserCubit>(
+          create: (context) =>
+              UserCubit(SupabaseAuthService())..loadUserProfile(),
         ),
       ],
       child: MaterialApp(

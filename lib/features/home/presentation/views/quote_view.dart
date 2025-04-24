@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mood_matcher/core/utils/app_backgrounds.dart';
-import 'package:mood_matcher/features/home/presentation/view_models/cubit/quote_cubit.dart';
+
+import '../view_models/quote_cubit/quote_cubit.dart';
 
 class QuotePage extends StatelessWidget {
   const QuotePage({super.key});

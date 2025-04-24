@@ -12,34 +12,51 @@ class SupabaseAuthService {
     required String phone,
     XFile? avatar,
   }) async {
-    final response =
-    await _supabase.auth.signUp(email: email, password: password);
-    final registeredUserId = response.user?.id;
+    
+    final response = await _supabase.auth.signUp(
+      email: email,
+      password: password,
+    );
 
-    if (registeredUserId == null) {
-      throw Exception('Registration failed. No user ID returned.');
+    final registeredUser = response.user;
+    if (registeredUser == null) {
+      throw Exception('Registration failed. No user returned.');
     }
 
-    // Insert additional info into profiles table
+    final userId = registeredUser.id;
+
+    
+    await Future.delayed(const Duration(seconds: 1));
+
+    
     await _supabase.from('profiles').insert({
-      'id': registeredUserId,
+      'id': userId,
       'name': name,
       'phone': phone,
     });
 
-    // Upload avatar if exists
+   
     if (avatar != null) {
-      final avatarPath = '$registeredUserId/avatar.png';
+      final avatarPath = '$userId/avatar.png';
       final file = File(avatar.path);
       await _supabase.storage.from('avatars').upload(avatarPath, file);
     }
+
+    
+    await _supabase.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
   }
 
   Future<void> loginUser({
     required String email,
     required String password,
   }) async {
-    await _supabase.auth.signInWithPassword(email: email, password: password);
+    await _supabase.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
   }
 
   Future<void> updateAvatar({
@@ -67,5 +84,19 @@ class SupabaseAuthService {
 
   String getAvatarUrl(String userId) {
     return _supabase.storage.from('avatars').getPublicUrl('$userId/avatar.png');
+  }
+
+  Future<Map<String, dynamic>> getUserProfile() async {
+    final userId = _supabase.auth.currentUser?.id;
+    if (userId == null) throw Exception("No user logged in");
+
+    final response =
+        await _supabase.from('profiles').select().eq('id', userId).single();
+
+    return {
+      'id': userId,
+      'name': response['name'],
+      'avatarUrl': getAvatarUrl(userId),
+    };
   }
 }
