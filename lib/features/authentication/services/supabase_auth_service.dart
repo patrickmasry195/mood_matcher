@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -12,7 +13,6 @@ class SupabaseAuthService {
     required String phone,
     XFile? avatar,
   }) async {
-    
     final response = await _supabase.auth.signUp(
       email: email,
       password: password,
@@ -25,24 +25,20 @@ class SupabaseAuthService {
 
     final userId = registeredUser.id;
 
-    
     await Future.delayed(const Duration(seconds: 1));
 
-    
     await _supabase.from('profiles').insert({
       'id': userId,
       'name': name,
       'phone': phone,
     });
 
-   
     if (avatar != null) {
       final avatarPath = '$userId/avatar.png';
       final file = File(avatar.path);
       await _supabase.storage.from('avatars').upload(avatarPath, file);
     }
 
-    
     await _supabase.auth.signInWithPassword(
       email: email,
       password: password,
@@ -71,10 +67,35 @@ class SupabaseAuthService {
   }
 
   Future<void> deleteAccount() async {
-    final userId = _supabase.auth.currentUser?.id;
-    if (userId != null) {
+    final user = _supabase.auth.currentUser;
+    final userId = user?.id;
+
+    if (userId == null) {
+      throw Exception("No user logged in");
+    }
+
+    try {
       await _supabase.storage.from('avatars').remove(['$userId/avatar.png']);
+    } catch (e) {
+      log("Error deleting avatar: $e");
+    }
+
+    try {
+      await _supabase.from('profiles').delete().eq('id', userId);
+    } catch (e) {
+      log("Error deleting user profile: $e");
+    }
+
+    try {
       await _supabase.auth.admin.deleteUser(userId);
+    } catch (e) {
+      log("Error deleting user account: $e");
+    }
+
+    try {
+      await signOut();
+    } catch (e) {
+      log("Error during sign-out: $e");
     }
   }
 
@@ -87,7 +108,9 @@ class SupabaseAuthService {
   }
 
   Future<Map<String, dynamic>> getUserProfile() async {
-    final userId = _supabase.auth.currentUser?.id;
+    final user = _supabase.auth.currentUser;
+    final userId = user?.id;
+
     if (userId == null) throw Exception("No user logged in");
 
     final response =
@@ -97,6 +120,7 @@ class SupabaseAuthService {
       'id': userId,
       'name': response['name'],
       'avatarUrl': getAvatarUrl(userId),
+      'email': user?.email,
     };
   }
 }

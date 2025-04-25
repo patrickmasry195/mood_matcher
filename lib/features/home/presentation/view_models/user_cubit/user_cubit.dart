@@ -15,9 +15,30 @@ class UserCubit extends Cubit<UserState> {
       emit(UserLoaded(
         name: userData['name'],
         avatarUrl: userData['avatarUrl'],
+        email: userData['email'],
       ));
     } catch (e) {
       emit(UserError(message: e.toString()));
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    emit(UserLoading());
+    try {
+      await _authService.deleteAccount();
+      emit(UserDeleted());
+    } catch (e) {
+      emit(UserError(message: 'Failed to delete account: ${e.toString()}'));
+    }
+  }
+
+  Future<void> signOut() async {
+    emit(UserLoading());
+    try {
+      await _authService.signOut();
+      emit(UserSignedOut());
+    } catch (e) {
+      emit(UserError(message: 'Failed to sign out: ${e.toString()}'));
     }
   }
 }

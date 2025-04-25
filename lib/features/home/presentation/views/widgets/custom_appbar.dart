@@ -4,6 +4,7 @@ import 'package:animated_emoji/emoji.dart';
 import 'package:animated_emoji/emojis.g.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:mood_matcher/core/utils/constants.dart';
+import 'package:mood_matcher/features/userprofile/presentation/views/userprofile_view.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
@@ -61,13 +62,25 @@ class CustomAppBar extends StatelessWidget {
               ],
             ),
           ),
-          ClipOval(
-            child: Image.network(
-              userAvatarUrl,
-              width: 48,
-              height: 48,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => const Icon(Icons.person, size: 48),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, UserProfilePage.id);
+            },
+            child: ClipOval(
+              child: Image.network(
+                userAvatarUrl,
+                width: 48,
+                height: 48,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    'assets/default_avatar.png',
+                    width: 48,
+                    height: 48,
+                    fit: BoxFit.cover,
+                  );
+                },
+              ),
             ),
           ),
         ],

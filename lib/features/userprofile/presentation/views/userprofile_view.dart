@@ -1,9 +1,14 @@
 import 'package:animated_emoji/animated_emoji.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mood_matcher/core/utils/app_backgrounds.dart';
 import 'package:mood_matcher/core/utils/constants.dart';
+import 'package:mood_matcher/features/authentication/presentation/views/authentication_view.dart';
 import 'package:mood_matcher/features/authentication/presentation/views/widgets/custom_button_with_emoji.dart';
+import 'package:mood_matcher/features/home/presentation/view_models/user_cubit/user_cubit.dart';
 import 'package:mood_matcher/features/home/presentation/views/home_view.dart';
 
 class UserProfilePage extends StatelessWidget {
@@ -36,65 +41,120 @@ class UserProfilePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 25,
                 children: [
-                  Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(140),
-                        ),
-                        child: const CircleAvatar(
-                          radius: 40,
-                          backgroundImage:
-                              AssetImage("assets/default_avatar.png"),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Daryl Dixon",
-                        style: GoogleFonts.lexend(
-                          fontSize: 30,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "daryl@gmail.com",
-                        style: GoogleFonts.lexend(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
+                  BlocConsumer<UserCubit, UserState>(
+                    listener: (context, state) {
+                      if (state is UserError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.message)),
+                        );
+                      }
+
+                      if (state is UserDeleted || state is UserSignedOut) {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, AuthenticationPage.id, (_) => false);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is UserLoading) {
+                        return const CircularProgressIndicator(
+                          color: kMainColor,
+                        );
+                      } else if (state is UserLoaded) {
+                        return Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(140),
+                              ),
+                              child: ClipOval(
+                                child: Image.network(
+                                  state.avatarUrl,
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                      'assets/default_avatar.png',
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            AutoSizeText(
+                              state.name,
+                              style: GoogleFonts.lexend(
+                                fontSize: 30,
+                                color: Colors.white,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 10),
+                            AutoSizeText(
+                              state.email,
+                              style: GoogleFonts.lexend(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 20),
+                          ],
+                        );
+                      } else if (state is UserError) {
+                        return Text(
+                          state.message,
+                          style: const TextStyle(color: Colors.red),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
                   ),
-                  const CustomButtonWithEmoji(
-                    text: "Edit Account",
-                    emoji: AnimatedEmojis.pencil,
-                  ),
-                  const CustomButtonWithEmoji(
+                  CustomButtonWithEmoji(
                     text: "Delete Account",
                     emoji: AnimatedEmojis.loudlyCrying,
+                    onPressed: () {
+                      context.read<UserCubit>().deleteAccount();
+                      context.read<UserCubit>().signOut();
+                    },
                   ),
-                  const CustomButtonWithEmoji(
+                  CustomButtonWithEmoji(
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.noHeader,
+                              customHeader: const Icon(
+                                Icons.email,
+                                size: 60,
+                                color: Colors.white,
+                              ),
+                              dialogBackgroundColor: kMainColor,
+                              body: const Center(
+                                child: Text(
+                                    'You can reach out us on this email: moodmatcher2024@gmail.com'),
+                              ),
+                              title: 'Contact Us',
+                              desc: 'this is title')
+                          .show();
+                    },
                     text: "Contact us",
                     emoji: AnimatedEmojis.loveLetter,
                   ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  const CustomButtonWithEmoji(
+                  const SizedBox(height: 40),
+                  CustomButtonWithEmoji(
                     text: "Log out",
                     emoji: AnimatedEmojis.cry,
+                    onPressed: () {
+                      context.read<UserCubit>().signOut();
+                    },
                   ),
-                  const Spacer(
-                    flex: 10,
-                  )
+                  const Spacer(flex: 10),
                 ],
               ),
             ),
