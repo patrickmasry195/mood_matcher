@@ -4,6 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mood_matcher/core/utils/app_backgrounds.dart';
 import 'package:mood_matcher/core/utils/constants.dart';
 import 'package:mood_matcher/features/authentication/presentation/views/authentication_view.dart';
@@ -127,21 +128,23 @@ class UserProfilePage extends StatelessWidget {
                     onPressed: () {
                       FocusScope.of(context).unfocus();
                       AwesomeDialog(
-                              context: context,
-                              dialogType: DialogType.noHeader,
-                              customHeader: const Icon(
-                                Icons.email,
-                                size: 60,
-                                color: Colors.white,
-                              ),
-                              dialogBackgroundColor: kMainColor,
-                              body: const Center(
-                                child: Text(
-                                    'You can reach out us on this email: moodmatcher2024@gmail.com'),
-                              ),
-                              title: 'Contact Us',
-                              desc: 'this is title')
-                          .show();
+                        context: context,
+                        dialogType: DialogType.noHeader,
+                        customHeader:
+                            Lottie.asset('assets/contact_animation.json'),
+                        dialogBackgroundColor: kMainColor,
+                        title: 'Contact us',
+                        titleTextStyle: GoogleFonts.lexend(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        desc: 'moodmatcher2024@gmail.com',
+                        descTextStyle: GoogleFonts.lexend(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ).show();
                     },
                     text: "Contact us",
                     emoji: AnimatedEmojis.loveLetter,
