@@ -76,24 +76,31 @@ class SupabaseAuthService {
 
     try {
       await _supabase.storage.from('avatars').remove(['$userId/avatar.png']);
+      log("Avatar deleted successfully");
     } catch (e) {
       log("Error deleting avatar: $e");
     }
 
     try {
-      await _supabase.from('profiles').delete().eq('id', userId);
-    } catch (e) {
-      log("Error deleting user profile: $e");
-    }
+      final response = await _supabase.functions.invoke(
+        'delete-user',
+        body: {'user_id': userId},
+      );
 
-    try {
-      await _supabase.auth.admin.deleteUser(userId);
+      if (response.status != 200) {
+        log('Edge function failed: ${response.data}');
+        throw Exception('Failed to delete account via server');
+      }
+
+      log('Account deleted successfully via Edge Function');
     } catch (e) {
-      log("Error deleting user account: $e");
+      log("Error deleting account: $e");
+      rethrow;
     }
 
     try {
       await signOut();
+      log("User signed out successfully");
     } catch (e) {
       log("Error during sign-out: $e");
     }

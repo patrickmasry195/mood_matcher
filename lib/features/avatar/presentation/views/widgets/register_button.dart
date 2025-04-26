@@ -16,7 +16,13 @@ class RegisterButton extends StatelessWidget {
         if (state.isSuccess) {
           await context.read<UserCubit>().loadUserProfile();
           await Future.delayed(const Duration(milliseconds: 300));
-          Navigator.pushReplacementNamed(context, HomePage.id);
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ),
+            (Route<dynamic> route) => false,
+          );
         } else if (state.errorMessage != null) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.errorMessage!)),
