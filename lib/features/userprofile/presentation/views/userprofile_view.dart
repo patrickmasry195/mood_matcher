@@ -11,6 +11,7 @@ import 'package:mood_matcher/features/authentication/presentation/views/authenti
 import 'package:mood_matcher/features/authentication/presentation/views/widgets/custom_button_with_emoji.dart';
 import 'package:mood_matcher/features/home/presentation/view_models/user_cubit/user_cubit.dart';
 import 'package:mood_matcher/features/home/presentation/views/home_view.dart';
+import 'package:mood_matcher/features/userprofile/presentation/views/widgets/update_name.dart';
 
 class UserProfilePage extends StatelessWidget {
   const UserProfilePage({super.key});
@@ -35,13 +36,13 @@ class UserProfilePage extends StatelessWidget {
               ),
             ),
           ),
-          body: Center(
-            child: Padding(
+          body: SafeArea(
+            child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 14),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 25,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 20),
                   BlocConsumer<UserCubit, UserState>(
                     listener: (context, state) {
                       if (state is UserError) {
@@ -85,14 +86,22 @@ class UserProfilePage extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 20),
-                            AutoSizeText(
-                              state.name,
-                              style: GoogleFonts.lexend(
-                                fontSize: 30,
-                                color: Colors.white,
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => const UpdateName(),
+                                );
+                              },
+                              child: AutoSizeText(
+                                state.name,
+                                style: GoogleFonts.lexend(
+                                  fontSize: 30,
+                                  color: Colors.white,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
                             ),
                             const SizedBox(height: 10),
                             AutoSizeText(
@@ -116,6 +125,7 @@ class UserProfilePage extends StatelessWidget {
                       return const SizedBox.shrink();
                     },
                   ),
+                  const SizedBox(height: 25),
                   CustomButtonWithEmoji(
                     text: "Delete Account",
                     emoji: AnimatedEmojis.loudlyCrying,
@@ -124,6 +134,7 @@ class UserProfilePage extends StatelessWidget {
                       context.read<UserCubit>().signOut();
                     },
                   ),
+                  const SizedBox(height: 25),
                   CustomButtonWithEmoji(
                     onPressed: () {
                       FocusScope.of(context).unfocus();
@@ -157,7 +168,7 @@ class UserProfilePage extends StatelessWidget {
                       context.read<UserCubit>().signOut();
                     },
                   ),
-                  const Spacer(flex: 10),
+                  const SizedBox(height: 40),
                 ],
               ),
             ),

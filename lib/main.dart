@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mood_matcher/core/utils/constants.dart';
 import 'package:mood_matcher/features/authentication/presentation/view_models/login_cubit/login_cubit.dart';
 import 'package:mood_matcher/features/authentication/presentation/view_models/register_cubit/register_cubit.dart';
 import 'package:mood_matcher/features/authentication/presentation/views/authentication_view.dart';
@@ -21,6 +22,9 @@ void main() async {
   await Supabase.initialize(
     url: kSupabaseURL,
     anonKey: kSupabaseAnonKey,
+    authOptions: const FlutterAuthClientOptions(
+      authFlowType: AuthFlowType.pkce,
+    ),
   );
   runApp(const MyApp());
 }
@@ -48,7 +52,22 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: AuthenticationPage.id,
+        home: FutureBuilder(
+          future: Supabase.instance.client.auth.currentSession != null
+              ? Future.value(true)
+              : Future.value(false),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const CircularProgressIndicator(
+                color: kMainColor,
+              );
+            }
+
+            return snapshot.data == true
+                ? const HomePage()
+                : const AuthenticationPage();
+          },
+        ),
         routes: {
           AuthenticationPage.id: (context) => const AuthenticationPage(),
           LoginPage.id: (context) => const LoginPage(),

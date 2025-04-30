@@ -55,15 +55,28 @@ class SupabaseAuthService {
     );
   }
 
-  Future<void> updateAvatar({
+  Future<void> updateProfile({
     required XFile avatar,
+    required String name,
   }) async {
     final userId = _supabase.auth.currentUser?.id;
-    if (userId != null) {
-      final avatarPath = '$userId/avatar.png';
-      final file = File(avatar.path);
-      await _supabase.storage.from('avatars').update(avatarPath, file);
-    }
+    if (userId == null) return;
+
+    final avatarPath = '$userId/avatar.png';
+    final file = File(avatar.path);
+
+    await _supabase.storage
+        .from('avatars')
+        .upload(avatarPath, file, fileOptions: const FileOptions(upsert: true));
+
+    final avatarUrl =
+        _supabase.storage.from('avatars').getPublicUrl(avatarPath);
+
+    await _supabase.from('profiles').upsert({
+      'id': userId,
+      'name': name,
+      'avatar_url': avatarUrl,
+    });
   }
 
   Future<void> deleteAccount() async {
