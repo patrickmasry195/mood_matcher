@@ -3,7 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mood_matcher/core/utils/constants.dart';
 
 class UpdateName extends StatelessWidget {
-  const UpdateName({super.key});
+  final TextEditingController controller;
+  final VoidCallback onUpdatePressed;
+  final bool isLoading;
+
+  const UpdateName({
+    super.key,
+    required this.controller,
+    required this.onUpdatePressed,
+    required this.isLoading,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +55,7 @@ class UpdateName extends StatelessWidget {
                       maxHeight: isSmallScreen ? 50 : 55,
                     ),
                     child: TextFormField(
+                      controller: controller,
                       style: GoogleFonts.lexend(
                         color: Colors.white,
                         fontSize: isSmallScreen ? 14 : 15,
@@ -71,8 +81,10 @@ class UpdateName extends StatelessWidget {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
-                          borderSide:
-                              const BorderSide(color: Colors.white, width: 1.5),
+                          borderSide: const BorderSide(
+                            color: Colors.white,
+                            width: 1.5,
+                          ),
                         ),
                       ),
                     ),
@@ -84,8 +96,6 @@ class UpdateName extends StatelessWidget {
                       TextButton(
                         onPressed: () => Navigator.pop(context),
                         style: TextButton.styleFrom(
-                          minimumSize: Size.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           padding: EdgeInsets.symmetric(
                             horizontal: isSmallScreen ? 6 : 8,
                             vertical: isSmallScreen ? 1 : 2,
@@ -101,26 +111,34 @@ class UpdateName extends StatelessWidget {
                       ),
                       SizedBox(width: isSmallScreen ? 6 : 8),
                       ElevatedButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: isLoading ? null : onUpdatePressed,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                           elevation: 1,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           padding: EdgeInsets.symmetric(
                             horizontal: isSmallScreen ? 10 : 12,
                             vertical: isSmallScreen ? 4 : 6,
                           ),
                         ),
-                        child: Text(
-                          "Update",
-                          style: GoogleFonts.lexend(
-                            color: kMainColor,
-                            fontSize: isSmallScreen ? 13 : 14,
-                          ),
-                        ),
+                        child: isLoading
+                            ? const SizedBox(
+                                height: 16,
+                                width: 16,
+                                child: CircularProgressIndicator(
+                                  color: kMainColor,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : Text(
+                                "Update",
+                                style: GoogleFonts.lexend(
+                                  color: kMainColor,
+                                  fontSize: isSmallScreen ? 13 : 14,
+                                ),
+                              ),
                       ),
                     ],
                   ),

@@ -4,6 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mood_matcher/core/utils/app_backgrounds.dart';
 import 'package:mood_matcher/core/utils/constants.dart';
@@ -64,33 +65,67 @@ class UserProfilePage extends StatelessWidget {
                       } else if (state is UserLoaded) {
                         return Column(
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(140),
-                              ),
-                              child: ClipOval(
-                                child: Image.network(
-                                  state.avatarUrl,
-                                  width: 80,
-                                  height: 80,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Image.asset(
-                                      'assets/default_avatar.png',
-                                      width: 80,
-                                      height: 80,
-                                      fit: BoxFit.cover,
-                                    );
-                                  },
+                            GestureDetector(
+                              onTap: () async {
+                                final picker = ImagePicker();
+                                final pickedFile = await picker.pickImage(
+                                    source: ImageSource.gallery);
+                                if (pickedFile != null && context.mounted) {
+                                  context
+                                      .read<UserCubit>()
+                                      .updateUserAvatar(pickedFile);
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(140),
+                                ),
+                                child: ClipOval(
+                                  child: Image.network(
+                                    state.avatarUrl,
+                                    width: 80,
+                                    height: 80,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Image.asset(
+                                        'assets/default_avatar.png',
+                                        width: 80,
+                                        height: 80,
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
                             const SizedBox(height: 20),
                             GestureDetector(
                               onTap: () {
+                                final controller = TextEditingController();
+                                bool isLoading = false;
+
                                 showDialog(
                                   context: context,
-                                  builder: (context) => const UpdateName(),
+                                  builder: (context) => StatefulBuilder(
+                                    builder: (BuildContext context, setState) {
+                                      return UpdateName(
+                                        controller: controller,
+                                        onUpdatePressed: () async {
+                                          final name = controller.text.trim();
+                                          if (name.isEmpty) return;
+
+                                          setState(() => isLoading = true);
+                                          await context
+                                              .read<UserCubit>()
+                                              .updateUserName(name);
+                                          if (context.mounted) {
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                        isLoading: isLoading,
+                                      );
+                                    },
+                                  ),
                                 );
                               },
                               child: AutoSizeText(

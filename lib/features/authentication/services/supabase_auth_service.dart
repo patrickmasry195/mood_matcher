@@ -55,30 +55,6 @@ class SupabaseAuthService {
     );
   }
 
-  Future<void> updateProfile({
-    required XFile avatar,
-    required String name,
-  }) async {
-    final userId = _supabase.auth.currentUser?.id;
-    if (userId == null) return;
-
-    final avatarPath = '$userId/avatar.png';
-    final file = File(avatar.path);
-
-    await _supabase.storage
-        .from('avatars')
-        .upload(avatarPath, file, fileOptions: const FileOptions(upsert: true));
-
-    final avatarUrl =
-        _supabase.storage.from('avatars').getPublicUrl(avatarPath);
-
-    await _supabase.from('profiles').upsert({
-      'id': userId,
-      'name': name,
-      'avatar_url': avatarUrl,
-    });
-  }
-
   Future<void> deleteAccount() async {
     final user = _supabase.auth.currentUser;
     final userId = user?.id;
@@ -142,5 +118,24 @@ class SupabaseAuthService {
       'avatarUrl': getAvatarUrl(userId),
       'email': user?.email,
     };
+  }
+
+  Future<void> updateUserName(String newName) async {
+    final userId = _supabase.auth.currentUser?.id;
+    if (userId == null) throw Exception("No user logged in");
+
+    await _supabase.from('profiles').update({'name': newName}).eq('id', userId);
+  }
+
+  Future<void> updateUserAvatar(XFile image) async {
+    final userId = _supabase.auth.currentUser?.id;
+    if (userId == null) throw Exception("No user logged in");
+
+    final avatarPath = '$userId/avatar.png';
+    final file = File(image.path);
+
+    await _supabase.storage
+        .from('avatars')
+        .upload(avatarPath, file, fileOptions: const FileOptions(upsert: true));
   }
 }
