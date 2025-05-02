@@ -6,13 +6,20 @@ import 'package:mood_matcher/features/authentication/presentation/view_models/re
 import 'package:mood_matcher/features/authentication/presentation/views/authentication_view.dart';
 import 'package:mood_matcher/features/authentication/services/supabase_auth_service.dart';
 import 'package:mood_matcher/features/avatar/presentation/views/avatar_view.dart';
-import 'package:mood_matcher/features/chatbot/presentation/views/chatbot_view.dart';
+import 'package:mood_matcher/features/chatbot/presentation/view_models/music_chatbot_cubit/music_chatbot_cubit.dart';
+import 'package:mood_matcher/features/chatbot/presentation/views/movies_chatbot_view.dart';
+import 'package:mood_matcher/features/chatbot/presentation/views/tvshows_chatbot_view.dart';
+import 'package:mood_matcher/features/chatbot/services/music_chatbot_service.dart';
 import 'package:mood_matcher/features/home/presentation/view_models/user_cubit/user_cubit.dart';
 import 'package:mood_matcher/features/home/presentation/views/home_view.dart';
 import 'package:mood_matcher/features/authentication/presentation/views/login_view.dart';
 import 'package:mood_matcher/features/authentication/presentation/views/register_view.dart';
 import 'package:mood_matcher/features/userprofile/presentation/views/userprofile_view.dart';
 import 'core/utils/supabase_config.dart';
+import 'features/chatbot/presentation/views/anime_chatbot_view.dart';
+import 'features/chatbot/presentation/views/books_chatbot_view.dart';
+import 'features/chatbot/presentation/views/games_chatbot_view.dart';
+import 'features/chatbot/presentation/views/music_chatbot_view.dart';
 import 'features/home/presentation/view_models/quote_cubit/quote_cubit.dart';
 import 'features/home/presentation/views/quote_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -49,6 +56,9 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               UserCubit(SupabaseAuthService())..loadUserProfile(),
         ),
+        BlocProvider<MusicChatbotCubit>(
+          create: (context) => MusicChatbotCubit(MusicChatbotService()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -74,7 +84,12 @@ class MyApp extends StatelessWidget {
           RegisterPage.id: (context) => const RegisterPage(),
           AvatarPage.id: (context) => const AvatarPage(),
           HomePage.id: (context) => const HomePage(),
-          ChatBotPage.id: (context) => const ChatBotPage(),
+          MoviesChatBotPage.id: (context) => const MoviesChatBotPage(),
+          TvShowsChatBotPage.id: (context) => const TvShowsChatBotPage(),
+          MusicChatBotPage.id: (context) => const MusicChatBotPage(),
+          GamesChatBotPage.id: (context) => const GamesChatBotPage(),
+          BooksChatBotPage.id: (context) => const BooksChatBotPage(),
+          AnimeChatBotPage.id: (context) => const AnimeChatBotPage(),
           UserProfilePage.id: (context) => const UserProfilePage(),
           QuotePage.id: (context) => const QuotePage(),
         },

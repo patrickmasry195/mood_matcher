@@ -1,41 +1,46 @@
-import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mood_matcher/core/utils/constants.dart';
-import 'package:mood_matcher/features/chatbot/dummy_data.dart';
 
 class ChatBubbles extends StatelessWidget {
-  const ChatBubbles({super.key});
+  final List<Map<String, String>> messages;
+
+  const ChatBubbles({super.key, required this.messages});
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: ListView.separated(
-        shrinkWrap: true,
-        reverse: true,
-        itemBuilder: (BuildContext context, int index) {
-          DummyData dummyData = DummyData();
-          final message = dummyData.chatData[index];
-          bool isUser = message["sender"] == "user";
-          return Align(
-            alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-            child: BubbleSpecialThree(
-              isSender: isUser ? true : false,
-              color: isUser ? Colors.white : kMainColor,
-              text: '${message["message"]}',
-              textStyle: GoogleFonts.lexend(
-                color: isUser ? Colors.black : Colors.white,
+    return ListView.builder(
+      reverse: true,
+      itemCount: messages.length,
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      itemBuilder: (context, index) {
+        final reversedIndex = messages.length - 1 - index;
+        final message = messages[reversedIndex];
+        final isUser = message["sender"] == "user";
+        final messageText = message["message"] ?? "";
+
+        return Align(
+          alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            decoration: BoxDecoration(
+              color: isUser ? kMainColor : Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * 0.7,
+            ),
+            child: Text(
+              messageText,
+              style: GoogleFonts.lexend(
+                color: isUser ? Colors.white : Colors.black,
                 fontSize: 16,
               ),
             ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) => SizedBox(
-          height: MediaQuery.of(context).size.height * .01,
-        ),
-        itemCount: DummyData().chatData.length,
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -6,10 +6,10 @@ import 'package:mood_matcher/core/utils/app_backgrounds.dart';
 import 'package:mood_matcher/features/chatbot/presentation/views/widgets/chat_bubbles.dart';
 import 'package:mood_matcher/features/home/presentation/views/home_view.dart';
 
-class ChatBotPage extends StatelessWidget {
-  const ChatBotPage({super.key});
+class MoviesChatBotPage extends StatelessWidget {
+  const MoviesChatBotPage({super.key});
 
-  static String id = "ChatBotPage";
+  static String id = "MoviesChatBotPage";
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +32,8 @@ class ChatBotPage extends StatelessWidget {
           ),
           body: Column(
             children: [
-              const Expanded(
-                child: ChatBubbles(),
+               Expanded(
+                child: ChatBubbles(messages: [],),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * .02,
