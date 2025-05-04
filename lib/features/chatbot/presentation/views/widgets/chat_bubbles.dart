@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mood_matcher/core/utils/constants.dart';
+import 'package:chat_bubbles/chat_bubbles.dart';
 
 class ChatBubbles extends StatelessWidget {
   final List<Map<String, String>> messages;
@@ -12,34 +13,40 @@ class ChatBubbles extends StatelessWidget {
     return ListView.builder(
       reverse: true,
       itemCount: messages.length,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
       itemBuilder: (context, index) {
         final reversedIndex = messages.length - 1 - index;
         final message = messages[reversedIndex];
         final isUser = message["sender"] == "user";
         final messageText = message["message"] ?? "";
 
-        return Align(
-          alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 5),
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            decoration: BoxDecoration(
-              color: isUser ? kMainColor : Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.7,
-            ),
-            child: Text(
-              messageText,
-              style: GoogleFonts.lexend(
-                color: isUser ? Colors.white : Colors.black,
-                fontSize: 16,
-              ),
-            ),
-          ),
-        );
+        return isUser
+            ? Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: BubbleSpecialThree(
+                  text: messageText,
+                  isSender: true,
+                  color: kMainColor,
+                  textStyle: GoogleFonts.lexend(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                  tail: true,
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: BubbleSpecialThree(
+                  text: messageText,
+                  isSender: false,
+                  color: Colors.white,
+                  textStyle: GoogleFonts.lexend(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                  tail: true,
+                ),
+              );
       },
     );
   }

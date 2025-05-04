@@ -32,7 +32,7 @@ class BooksChatBotPage extends StatelessWidget {
           ),
           body: Column(
             children: [
-               Expanded(
+               const Expanded(
                 child: ChatBubbles(messages: [],),
               ),
               SizedBox(
