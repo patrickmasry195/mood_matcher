@@ -6,9 +6,11 @@ import 'package:mood_matcher/features/authentication/presentation/view_models/re
 import 'package:mood_matcher/features/authentication/presentation/views/authentication_view.dart';
 import 'package:mood_matcher/features/authentication/services/supabase_auth_service.dart';
 import 'package:mood_matcher/features/avatar/presentation/views/avatar_view.dart';
+import 'package:mood_matcher/features/chatbot/presentation/view_models/movie_chatbot_cubit/movie_chatbot_cubit.dart';
 import 'package:mood_matcher/features/chatbot/presentation/view_models/music_chatbot_cubit/music_chatbot_cubit.dart';
 import 'package:mood_matcher/features/chatbot/presentation/views/movies_chatbot_view.dart';
 import 'package:mood_matcher/features/chatbot/presentation/views/tvshows_chatbot_view.dart';
+import 'package:mood_matcher/features/chatbot/services/movie_chatbot_service.dart';
 import 'package:mood_matcher/features/chatbot/services/music_chatbot_service.dart';
 import 'package:mood_matcher/features/home/presentation/view_models/user_cubit/user_cubit.dart';
 import 'package:mood_matcher/features/home/presentation/views/home_view.dart';
@@ -58,6 +60,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<MusicChatbotCubit>(
           create: (context) => MusicChatbotCubit(MusicChatbotService()),
+        ),
+        BlocProvider<MovieChatbotCubit>(
+          create: (context) => MovieChatbotCubit(MovieChatbotService()),
         ),
       ],
       child: MaterialApp(
