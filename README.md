@@ -67,7 +67,7 @@ const kSupabaseAnonKey =  "Your supabase Anonymous key";
 ## Setup for Flask (in VS code)
 
  - You have to download embeddings and model profiles for each model
- - You can find it here at [Google Drive](https://flutter.dev/docs/get-started/install)
+ - You can find it here at [Google Drive](https://drive.google.com/drive/folders/1yyzgySFoMsvg5kzaOt4Z4dVAQBraz_nI)
  - After that clone the repos and put embeddings and profiles in the
    folder of their model
 
