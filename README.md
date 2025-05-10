@@ -14,15 +14,20 @@ A Entertainment recommendation chatbot for:
 
 🎮 Games 
 
-## Getting Started
+# How to Run The Project
 
-This project is a starting point for a Flutter application.
+Follow these steps to clone and run MoodMatcher.
 
-A few resources to get you started if this is your first Flutter project:
+## Prerequisites
+- **Flutter SDK**: [Install Flutter](https://flutter.dev/docs/get-started/install) on your machine.
+- **Git**: [Install Git](https://git-scm.com/downloads) (if not already installed).
+- **IDE**: Android Studio/VSCode with Flutter & Dart plugins (recommended).
+- **Emulator/Device**: Set up an Android/iOS emulator or physical device.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Steps
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 1. Clone the Repository
+Run the following command in your terminal/command prompt:
+```bash
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
