@@ -18,10 +18,12 @@ import 'package:mood_matcher/features/authentication/presentation/views/login_vi
 import 'package:mood_matcher/features/authentication/presentation/views/register_view.dart';
 import 'package:mood_matcher/features/userprofile/presentation/views/userprofile_view.dart';
 import 'core/utils/supabase_config.dart';
+import 'features/chatbot/presentation/view_models/series_chatbot_cubit/series_chatbot_cubit.dart';
 import 'features/chatbot/presentation/views/anime_chatbot_view.dart';
 import 'features/chatbot/presentation/views/books_chatbot_view.dart';
 import 'features/chatbot/presentation/views/games_chatbot_view.dart';
 import 'features/chatbot/presentation/views/music_chatbot_view.dart';
+import 'features/chatbot/services/series_chatbot_service.dart';
 import 'features/home/presentation/view_models/quote_cubit/quote_cubit.dart';
 import 'features/home/presentation/views/quote_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -63,6 +65,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<MovieChatbotCubit>(
           create: (context) => MovieChatbotCubit(MovieChatbotService()),
+        ),
+        BlocProvider<TvShowsChatbotCubit>(
+          create: (context) => TvShowsChatbotCubit(SeriesChatbotService()),
         ),
       ],
       child: MaterialApp(
