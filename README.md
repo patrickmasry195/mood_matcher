@@ -91,9 +91,9 @@ const kSupabaseAnonKey =  "Your supabase Anonymous key";
 
  - ***Clone Movies model repository:***
 ```bash
-   git clone https://github.com/patrickmasry195/tvshows_chatbot.git 
+   git clone https://github.com/menashenouda/movie_model.git
    ```
  - **Run the application:**  
 ```bash
-   .\setup_pro.bat
+   .\run-project.bat
    ```
