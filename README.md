@@ -110,5 +110,5 @@ const kSupabaseAnonKey =  "Your supabase Anonymous key";
    ```
  - **Run the application:**  
 ```bash
-   .\run-project.bat
+   .\setup.bat
    ```
