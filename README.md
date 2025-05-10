@@ -1,6 +1,12 @@
 # Mood Matcher
 
-A new Flutter project.
+A personalized recommendation chatbot for:
+🎶 Music => Discover tracks and playlists based on your past listens.
+🎥 Movies => Get film recommendations based on what you’ve already enjoyed.
+📺 TV Shows => Find binge-worthy series that match your taste.
+🎌 Anime => Explore anime that fits your vibe and viewing history.
+📚 Books => Get book suggestions based on your reading habits.
+🎮 Games => Find your next gaming adventure based on past favorites.
 
 ## Getting Started
 
