@@ -58,6 +58,7 @@ Before you begin, make sure you have the following installed on your machine:
 
 ## Setup for Supabase
 Create a `supabase_config.dart` file and put it in `core/utils` folder
+
 File should look like this :
 ```dart
 const kSupabaseURL = "Your supabase url";  
