@@ -8,6 +8,11 @@
  - Books 📚
  - Games 🎮
 
+## Approach
+
+![approach](https://github.com/user-attachments/assets/6bdf549f-9055-4772-ab45-9377b277f9a6)
+
+
 ## App UI 
 [Figma design](https://www.figma.com/design/jaFsMAT8PH92iNnGBiome1/MoodMatcher?node-id=136-9&t=cvStVs0720i4ZS5X-1)
 
