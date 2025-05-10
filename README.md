@@ -29,5 +29,11 @@ Follow these steps to clone and run MoodMatcher.
 ### 1. Clone the Repository
 Run the following command in your terminal/command prompt:
 ```bash
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/your-username/https://github.com/patrickmasry195/mood_matcher.git
 cd your-repo
+## 📦 Install Dependencies
+
+### 2. Flutter Packages
+Run this command to install all packages listed in `pubspec.yaml`:
+```bash
+flutter pub get
