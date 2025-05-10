@@ -103,3 +103,12 @@ const kSupabaseAnonKey =  "Your supabase Anonymous key";
 ```bash
    .\run-project.bat
    ```
+
+ - ***Clone Anime model repository:***
+```bash
+   git clone https://github.com/menashenouda/anime_model.git
+   ```
+ - **Run the application:**  
+```bash
+   .\run-project.bat
+   ```
