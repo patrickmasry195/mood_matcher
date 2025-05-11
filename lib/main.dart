@@ -10,6 +10,7 @@ import 'package:mood_matcher/features/chatbot/presentation/view_models/movie_cha
 import 'package:mood_matcher/features/chatbot/presentation/view_models/music_chatbot_cubit/music_chatbot_cubit.dart';
 import 'package:mood_matcher/features/chatbot/presentation/views/movies_chatbot_view.dart';
 import 'package:mood_matcher/features/chatbot/presentation/views/tvshows_chatbot_view.dart';
+import 'package:mood_matcher/features/chatbot/services/anime_chatbot_service.dart';
 import 'package:mood_matcher/features/chatbot/services/movie_chatbot_service.dart';
 import 'package:mood_matcher/features/chatbot/services/music_chatbot_service.dart';
 import 'package:mood_matcher/features/home/presentation/view_models/user_cubit/user_cubit.dart';
@@ -18,6 +19,7 @@ import 'package:mood_matcher/features/authentication/presentation/views/login_vi
 import 'package:mood_matcher/features/authentication/presentation/views/register_view.dart';
 import 'package:mood_matcher/features/userprofile/presentation/views/userprofile_view.dart';
 import 'core/utils/supabase_config.dart';
+import 'features/chatbot/presentation/view_models/anime_chatbot_cubit/anime_chatbot_cubit.dart';
 import 'features/chatbot/presentation/view_models/series_chatbot_cubit/series_chatbot_cubit.dart';
 import 'features/chatbot/presentation/views/anime_chatbot_view.dart';
 import 'features/chatbot/presentation/views/books_chatbot_view.dart';
@@ -69,6 +71,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<TvShowsChatbotCubit>(
           create: (context) => TvShowsChatbotCubit(SeriesChatbotService()),
         ),
+        BlocProvider<AnimeChatbotCubit>(
+          create: (context) => AnimeChatbotCubit(AnimeChatbotService()),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
