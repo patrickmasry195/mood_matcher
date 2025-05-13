@@ -112,3 +112,12 @@ const kSupabaseAnonKey =  "Your supabase Anonymous key";
 ```bash
    .\setup.bat
    ```
+
+- ***Clone Games model repository:***
+```bash
+   git clone https://github.com/menashenouda/games_model.git
+   ```
+ - **Run the application:**  
+```bash
+   .\setup.bat
+   ```
