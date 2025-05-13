@@ -1,14 +1,14 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 
-class SeriesChatbotService {
+class BookChatbotService {
   final Dio _dio;
 
-  SeriesChatbotService([Dio? dio])
+  BookChatbotService({Dio? dio})
       : _dio = dio ??
             Dio(
               BaseOptions(
-                baseUrl: 'http://10.0.2.2:5003',
+                baseUrl: 'http://10.0.2.2:5000',
                 connectTimeout: const Duration(seconds: 15),
                 receiveTimeout: const Duration(seconds: 15),
                 headers: {'Content-Type': 'application/json'},
@@ -20,7 +20,7 @@ class SeriesChatbotService {
       log("Sending message: $message");
 
       final response = await _dio.post(
-        '/series_chatbot',
+        '/books_chatbot',
         data: {'message': message},
       );
 
@@ -33,38 +33,17 @@ class SeriesChatbotService {
           return {
             'message': data['response'],
             'recommendations': <String>[],
-            'hasSeparateRecommendations': false,
           };
         } else if (data['response'] is Map<String, dynamic>) {
           final resp = data['response'];
-
-          String seriesName =
-              resp['series'] ?? resp['seriesName'] ?? 'unknown series';
-          if (seriesName == 'unknown series') {
-            final match =
-                RegExp(r'recommend me a series like (.*)', caseSensitive: false)
-                    .firstMatch(message);
-            if (match != null) {
-              seriesName = match.group(1)?.trim() ?? 'your requested series';
-            }
-          }
-
-          seriesName = seriesName.replaceAll('"', '').trim();
-
-          final recommendations =
-              List<String>.from(resp['recommendations'] ?? []);
-
           return {
-            'message': 'Here are some shows similar to $seriesName:',
-            'recommendations': recommendations,
-            'hasSeparateRecommendations': true,
-            'seriesName': seriesName,
+            'message': 'Here are some books similar to "${resp['book']}":',
+            'recommendations': List<String>.from(resp['recommendations']),
           };
         } else {
           return {
-            'message': 'Unexpected response format from server.',
+            'message': 'Unexpected response format.',
             'recommendations': <String>[],
-            'hasSeparateRecommendations': false,
           };
         }
       } else {
@@ -90,7 +69,7 @@ class SeriesChatbotService {
       throw Exception(errorMessage);
     } catch (e) {
       log("Unexpected error: $e");
-      throw Exception('Failed to communicate with series chatbot: $e');
+      throw Exception('Failed to communicate with book chatbot: $e');
     }
   }
 }

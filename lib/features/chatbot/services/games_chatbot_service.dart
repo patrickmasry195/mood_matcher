@@ -8,7 +8,7 @@ class GameChatbotService {
       : _dio = dio ??
             Dio(
               BaseOptions(
-                baseUrl: 'http://10.0.2.2:5000',
+                baseUrl: 'http://10.0.2.2:5001',
                 connectTimeout: const Duration(seconds: 15),
                 receiveTimeout: const Duration(seconds: 15),
                 headers: {'Content-Type': 'application/json'},
@@ -20,7 +20,7 @@ class GameChatbotService {
       log("Sending message: $message");
 
       final response = await _dio.post(
-        '/chat',
+        '/games_chatbot',
         data: {'message': message},
       );
 

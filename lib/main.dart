@@ -6,12 +6,14 @@ import 'package:mood_matcher/features/authentication/presentation/view_models/re
 import 'package:mood_matcher/features/authentication/presentation/views/authentication_view.dart';
 import 'package:mood_matcher/features/authentication/services/supabase_auth_service.dart';
 import 'package:mood_matcher/features/avatar/presentation/views/avatar_view.dart';
+import 'package:mood_matcher/features/chatbot/presentation/view_models/books_chatbot_cubit/books_chatbot_cubit.dart';
 import 'package:mood_matcher/features/chatbot/presentation/view_models/games_chatbot_cubit/games_chatbot_cubit.dart';
 import 'package:mood_matcher/features/chatbot/presentation/view_models/movie_chatbot_cubit/movie_chatbot_cubit.dart';
 import 'package:mood_matcher/features/chatbot/presentation/view_models/music_chatbot_cubit/music_chatbot_cubit.dart';
 import 'package:mood_matcher/features/chatbot/presentation/views/movies_chatbot_view.dart';
 import 'package:mood_matcher/features/chatbot/presentation/views/tvshows_chatbot_view.dart';
 import 'package:mood_matcher/features/chatbot/services/anime_chatbot_service.dart';
+import 'package:mood_matcher/features/chatbot/services/books_chatbot_service.dart';
 import 'package:mood_matcher/features/chatbot/services/games_chatbot_service.dart';
 import 'package:mood_matcher/features/chatbot/services/movie_chatbot_service.dart';
 import 'package:mood_matcher/features/chatbot/services/music_chatbot_service.dart';
@@ -78,6 +80,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<GameChatbotCubit>(
           create: (context) => GameChatbotCubit(GameChatbotService()),
+        ),
+        BlocProvider<BookChatbotCubit>(
+          create: (context) => BookChatbotCubit(BookChatbotService()),
         ),
       ],
       child: MaterialApp(
