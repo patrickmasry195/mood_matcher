@@ -76,7 +76,7 @@ class _MoviesChatBotPageState extends State<MoviesChatBotPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Text(
-                              "Send a message to get movie recommendations.",
+                              "Send a message to get Movie recommendations.",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.lexend(
                                 color: Colors.white70,
@@ -93,7 +93,7 @@ class _MoviesChatBotPageState extends State<MoviesChatBotPage> {
                           if (state is MovieChatbotLoading)
                             const Center(
                               child:
-                              CircularProgressIndicator(color: kMainColor),
+                                  CircularProgressIndicator(color: kMainColor),
                             ),
                         ],
                       );

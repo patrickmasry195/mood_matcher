@@ -76,7 +76,7 @@ class _MusicChatBotPageState extends State<MusicChatBotPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Text(
-                              "Send a message to get music recommendations.",
+                              "Send a message to get Music recommendations.",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.lexend(
                                 color: Colors.white70,
