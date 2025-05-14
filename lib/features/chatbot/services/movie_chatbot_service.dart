@@ -7,7 +7,7 @@ class MovieChatbotService {
   MovieChatbotService({Dio? dio})
       : _dio = dio ??
             Dio(BaseOptions(
-              baseUrl: 'http://10.0.2.2:5004',
+              baseUrl: 'https://d40e-35-245-248-9.ngrok-free.app',
               connectTimeout: const Duration(seconds: 15),
               receiveTimeout: const Duration(seconds: 15),
               headers: {'Content-Type': 'application/json'},

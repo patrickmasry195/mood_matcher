@@ -8,7 +8,7 @@ class BookChatbotService {
       : _dio = dio ??
             Dio(
               BaseOptions(
-                baseUrl: 'http://10.0.2.2:5000',
+                baseUrl: 'https://0cb2-34-106-10-77.ngrok-free.app',
                 connectTimeout: const Duration(seconds: 15),
                 receiveTimeout: const Duration(seconds: 15),
                 headers: {'Content-Type': 'application/json'},
