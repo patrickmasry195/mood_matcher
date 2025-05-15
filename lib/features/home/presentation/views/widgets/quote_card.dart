@@ -38,24 +38,20 @@ class QuoteCard extends StatelessWidget {
             ],
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-              child: Expanded(
-                child: AutoSizeText(
-                  "❝$quote❞",
-                  style: GoogleFonts.lexend(
-                    color: Colors.white,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                  minFontSize: 15,
-                ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+            child: AutoSizeText(
+              "❝$quote❞",
+              style: GoogleFonts.lexend(
+                color: Colors.white,
               ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 4,
+              minFontSize: 15,
+              textAlign: TextAlign.center,
             ),
-          ],
+          ),
         ),
       ),
     );

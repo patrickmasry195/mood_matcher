@@ -1,0 +1,2 @@
+C:/Users/patri/StudioProjects/mood_matcher/android/app/.cxx/RelWithDebInfo/715a2f4x/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/patri/StudioProjects/mood_matcher/android/app/.cxx/RelWithDebInfo/715a2f4x/armeabi-v7a/CMakeFiles/rebuild_cache.dir
