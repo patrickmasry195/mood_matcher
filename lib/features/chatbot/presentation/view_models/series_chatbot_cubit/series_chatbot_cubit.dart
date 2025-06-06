@@ -1,75 +1,74 @@
+import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mood_matcher/features/chatbot/presentation/view_models/series_chatbot_cubit/series_chatbot_state.dart';
 import 'package:mood_matcher/features/chatbot/services/series_chatbot_service.dart';
 
 class TvShowsChatbotCubit extends Cubit<TvShowsChatbotState> {
-  final SeriesChatbotService _chatbotService;
-
-  TvShowsChatbotCubit(this._chatbotService) : super(TvShowsChatbotInitial());
-
+  final SeriesChatbotService service;
   final List<Map<String, String>> _messages = [];
-  List<String> _recommendations = [];
 
-  List<Map<String, String>> get messages => _messages;
+  List<Map<String, String>> get messages => List.from(_messages);
 
-  List<String> get recommendations => _recommendations;
-
-  Future<void> sendMessage(String message) async {
-    if (message.trim().isEmpty) return;
-
-    _addMessage('user', message);
-    emit(TvShowsChatbotLoading(messages: _messages));
-
-    try {
-      final response = await _chatbotService.sendMessage(message);
-
-      final botMessage =
-          response['message'] as String? ?? 'Here are some recommendations:';
-
-      _recommendations =
-          (response['recommendations'] as List<dynamic>?)?.cast<String>() ?? [];
-      final hasSeparateRecommendations =
-          response['hasSeparateRecommendations'] as bool? ?? false;
-
-      _addMessage('bot', botMessage);
-
-      if (hasSeparateRecommendations && _recommendations.isNotEmpty) {
-        for (final rec in _recommendations) {
-          _addMessage('bot', rec);
-        }
-      }
-
-      emit(TvShowsChatbotUpdated(
-        messages: _messages,
-        recommendations: _recommendations,
-      ));
-    } catch (e) {
-      _addMessage('bot', 'Sorry, something went wrong: ${e.toString()}');
-
-      emit(TvShowsChatbotError(
-        errorMessage: e.toString(),
-        messages: _messages,
-      ));
-
-      if (_messages.isNotEmpty) {
-        emit(TvShowsChatbotUpdated(
-          messages: _messages,
-          recommendations: _recommendations,
-        ));
-      }
-    }
-  }
-
-  void _addMessage(String sender, String message) {
-    _messages.add({
-      'sender': sender,
-      'message': message,
-    });
-  }
+  TvShowsChatbotCubit(this.service) : super(TvShowsChatbotInitial());
 
   void clearMessages() {
     _messages.clear();
-    _recommendations.clear();
     emit(TvShowsChatbotInitial());
+  }
+
+  void sendMessage(String userMessage) async {
+    if (userMessage.trim().isEmpty) return;
+
+    _messages.add({"sender": "user", "message": userMessage});
+    emit(TvShowsChatbotLoading(messages: List.from(_messages)));
+
+    try {
+      final response = await service.sendMessage(userMessage);
+
+      final botMessage = response["message"] as String?;
+      final recommendations = response["recommendations"] as List<String>?;
+
+      if (botMessage != null && botMessage.isNotEmpty) {
+        _messages.add({"sender": "bot", "message": botMessage});
+      }
+
+      if (recommendations != null && recommendations.isNotEmpty) {
+        for (final title in recommendations) {
+          _messages.add({"sender": "bot", "message": title});
+        }
+      } else if (botMessage == null || botMessage.isEmpty) {
+        _messages.add({
+          "sender": "bot",
+          "message":
+              "I couldn't find any series matching your request. Try a different title!"
+        });
+      }
+
+      emit(TvShowsChatbotUpdated(
+        messages: List.from(_messages),
+        recommendations: recommendations ?? [],
+      ));
+    } catch (e) {
+      log("Error in sendMessage: $e");
+
+      String errorMessage =
+          "Oops, something went wrong. Please try again later.";
+
+      if (e.toString().contains('Connection refused') ||
+          e.toString().contains('not running') ||
+          e.toString().contains('unreachable')) {
+        errorMessage =
+            "Cannot connect to the TV show service. Please check your connection.";
+      } else if (e.toString().contains('timeout')) {
+        errorMessage =
+            "Request timed out. The server might be busy, please try again.";
+      }
+
+      _messages.add({"sender": "bot", "message": errorMessage});
+      emit(TvShowsChatbotError(
+        errorMessage: errorMessage,
+        messages: List.from(_messages),
+      ));
+    }
   }
 }

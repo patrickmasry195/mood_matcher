@@ -4,11 +4,11 @@ import 'package:dio/dio.dart';
 class SeriesChatbotService {
   final Dio _dio;
 
-  SeriesChatbotService([Dio? dio])
+  SeriesChatbotService({Dio? dio})
       : _dio = dio ??
             Dio(
               BaseOptions(
-                baseUrl: 'http://10.0.2.2:5003',
+                baseUrl: 'http://192.168.1.7:5003',
                 connectTimeout: const Duration(seconds: 15),
                 receiveTimeout: const Duration(seconds: 15),
                 headers: {'Content-Type': 'application/json'},
@@ -33,38 +33,17 @@ class SeriesChatbotService {
           return {
             'message': data['response'],
             'recommendations': <String>[],
-            'hasSeparateRecommendations': false,
           };
         } else if (data['response'] is Map<String, dynamic>) {
           final resp = data['response'];
-
-          String seriesName =
-              resp['series'] ?? resp['seriesName'] ?? 'unknown series';
-          if (seriesName == 'unknown series') {
-            final match =
-                RegExp(r'recommend me a series like (.*)', caseSensitive: false)
-                    .firstMatch(message);
-            if (match != null) {
-              seriesName = match.group(1)?.trim() ?? 'your requested series';
-            }
-          }
-
-          seriesName = seriesName.replaceAll('"', '').trim();
-
-          final recommendations =
-              List<String>.from(resp['recommendations'] ?? []);
-
           return {
-            'message': 'Here are some shows similar to $seriesName:',
-            'recommendations': recommendations,
-            'hasSeparateRecommendations': true,
-            'seriesName': seriesName,
+            'message': 'Here are some series similar to "${resp['movie']}":',
+            'recommendations': List<String>.from(resp['recommendations']),
           };
         } else {
           return {
-            'message': 'Unexpected response format from server.',
+            'message': 'Unexpected response format.',
             'recommendations': <String>[],
-            'hasSeparateRecommendations': false,
           };
         }
       } else {
