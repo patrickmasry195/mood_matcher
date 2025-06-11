@@ -34,7 +34,7 @@ Movie Chatbot Page             | Music Chatbot Page
 
 
 ## Documentation
-[Google docs link](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpLicTYiduOjE5g8bV_LtO1XVUihwEG-yjzA&s)
+[Google docs link](https://docs.google.com/document/d/1V-b2pXGfZhhGXiO36j0VJ1cJt2Nq7QrS/edit?usp=sharing&ouid=105267528258841737377&rtpof=true&sd=true)
 # How to run the project
 
 ## Prerequisites
